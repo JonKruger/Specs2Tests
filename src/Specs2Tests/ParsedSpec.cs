@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Specs2Tests
@@ -6,7 +7,7 @@ namespace Specs2Tests
     {
         private List<string> _testNames = new List<string>();
 
-        public string ClassName{get; set;}
+        public string ClassName { get; set; }
         public IEnumerable<string> TestNames
         {
             get { return _testNames; }

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Specs2Tests
 {
-    public class SpecParser
+    public class SpecParser : ISpecParser
     {
         public ParsedSpec Parse(string specText)
         {
