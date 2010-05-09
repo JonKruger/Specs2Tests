@@ -58,4 +58,55 @@ When attempting to close an account and the account balance is not zero
             _result.SpecGroups.ElementAt(1).TestNames.ElementAt(1).ShouldEqual("should notify the user that the account was successfully closed");
         }
     }
+
+    [TestFixture]
+    public class Another_spec_parsing_test : Specification
+    {
+        private SpecParser _parser;
+        private ParsedSpec _result;
+
+        protected override void Establish_context()
+        {
+            _parser = new SpecParser();
+        }
+
+        protected override void Because_of()
+        {
+            _result = _parser.Parse(
+                @"When depositing money into an account
+- should add the specified amount into the account
+ 
+When withdrawing money from an account 
+- should withdraw the specified amount from the account
+- should specify that the withdrawal was successful");
+        }
+
+        [Test]
+        public void The_first_line_in_a_section_is_the_class_name()
+        {
+            _result.SpecGroups.ElementAt(0).ClassName.ShouldEqual("When depositing money into an account");
+        }
+
+        [Test]
+        public void Subsequent_lines_starting_with_dashes_are_the_test_names()
+        {
+            _result.SpecGroups.ElementAt(0).TestNames.Count().ShouldEqual(1);
+            _result.SpecGroups.ElementAt(0).TestNames.ElementAt(0).ShouldEqual("should add the specified amount into the account");
+        }
+
+        [Test]
+        public void When_a_line_follows_a_line_break_it_is_a_new_test()
+        {
+            _result.SpecGroups.ElementAt(1).ClassName.ShouldEqual("When withdrawing money from an account");
+        }
+
+        [Test]
+        public void Should_parse_the_test_names_for_the_second_set_of_specs()
+        {
+            _result.SpecGroups.ElementAt(1).TestNames.Count().ShouldEqual(2);
+            _result.SpecGroups.ElementAt(1).TestNames.ElementAt(0).ShouldEqual("should withdraw the specified amount from the account");
+            _result.SpecGroups.ElementAt(1).TestNames.ElementAt(1).ShouldEqual("should specify that the withdrawal was successful");
+        }
+
+    }
 }

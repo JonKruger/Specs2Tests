@@ -9,7 +9,7 @@ namespace Specs2Tests
         public ParsedSpec Parse(string specText)
         {
             var result = new ParsedSpec();
-            var currentSpecGroup = new ParsedSpec.SpecGroup();
+            ParsedSpec.SpecGroup currentSpecGroup = null;
             foreach (var line in specText.Split(new[] {"\r\n"}, StringSplitOptions.None).Select(s => s.Trim()))
             {
                 if (string.IsNullOrEmpty(line))
