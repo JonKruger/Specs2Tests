@@ -4,6 +4,13 @@ namespace Specs2Tests
 {
     public class CodeWriter : ICodeWriter
     {
+        private readonly IConfiguration _configuration;
+
+        public CodeWriter(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public string WriteCode(ParsedSpec parsedSpec)
         {
             var result = new StringBuilder();
@@ -16,7 +23,8 @@ namespace Specs2Tests
                 firstSpecGroup = false;
 
                 result.AppendLine("[TestFixture]");
-                result.AppendLine(string.Format("public class {0}", AddUnderscores(specGroup.ClassName)));
+                WriteTestNameLine(result, specGroup);
+
                 result.AppendLine("{");
 
                 var firstTest = true;
@@ -36,6 +44,15 @@ namespace Specs2Tests
                 result.AppendLine("}");
             }
             return result.ToString();
+        }
+
+        private void WriteTestNameLine(StringBuilder result, ParsedSpec.SpecGroup specGroup)
+        {
+            result.AppendFormat("public class {0}", AddUnderscores(specGroup.ClassName));
+
+            if (!string.IsNullOrEmpty(_configuration.BaseTestClass))
+                result.AppendFormat(" : {0}", _configuration.BaseTestClass);
+            result.AppendLine();
         }
 
         private string AddUnderscores(string s)

@@ -1,5 +1,6 @@
 using NBehave.Spec.NUnit;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace Specs2Tests.Tests
 {
@@ -22,7 +23,10 @@ namespace Specs2Tests.Tests
             currentSpecGroup.ClassName = "When doing something cool";
             currentSpecGroup.AddTest("should do something awesome");
 
-            _writer = new CodeWriter();
+            var configuration = CreateStub<IConfiguration>();
+            configuration.Stub(s => s.BaseTestClass).Return("BaseTestClass");
+
+            _writer = new CodeWriter(configuration);
         }
 
         protected override void Because_of()
@@ -35,7 +39,7 @@ namespace Specs2Tests.Tests
         {
             _result.ShouldEqual(
                 @"[TestFixture]
-public class When_attempting_to_close_an_account_and_the_account_balance_is_not_zero
+public class When_attempting_to_close_an_account_and_the_account_balance_is_not_zero : BaseTestClass
 {
     [Test]
     public void should_not_mark_the_account_as_closed()
@@ -51,7 +55,7 @@ public class When_attempting_to_close_an_account_and_the_account_balance_is_not_
 }
 
 [TestFixture]
-public class When_doing_something_cool
+public class When_doing_something_cool : BaseTestClass
 {
     [Test]
     public void should_do_something_awesome()
@@ -63,3 +67,4 @@ public class When_doing_something_cool
         }
     }
 }
+
