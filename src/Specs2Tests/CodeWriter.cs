@@ -7,25 +7,34 @@ namespace Specs2Tests
         public string WriteCode(ParsedSpec parsedSpec)
         {
             var result = new StringBuilder();
-            result.AppendLine("[TestFixture]");
-            result.AppendLine(string.Format("public class {0}", AddUnderscores(parsedSpec.ClassName)));
-            result.AppendLine("{");
 
-            var firstTest = true;
-            foreach (var testName in parsedSpec.TestNames)
+            var firstSpecGroup = true;
+            foreach (var specGroup in parsedSpec.SpecGroups)
             {
-                if (!firstTest)
+                if (!firstSpecGroup)
                     result.AppendLine();
-                firstTest = false;
+                firstSpecGroup = false;
 
-                result.AppendLine("    [Test]");
-                result.AppendLine(string.Format("    public void {0}()", AddUnderscores(testName)));
-                result.AppendLine("    {");
-                result.AppendLine();
-                result.AppendLine("    }");
+                result.AppendLine("[TestFixture]");
+                result.AppendLine(string.Format("public class {0}", AddUnderscores(specGroup.ClassName)));
+                result.AppendLine("{");
+
+                var firstTest = true;
+                foreach (var testName in specGroup.TestNames)
+                {
+                    if (!firstTest)
+                        result.AppendLine();
+                    firstTest = false;
+
+                    result.AppendLine("    [Test]");
+                    result.AppendLine(string.Format("    public void {0}()", AddUnderscores(testName)));
+                    result.AppendLine("    {");
+                    result.AppendLine();
+                    result.AppendLine("    }");
+                }
+
+                result.AppendLine("}");
             }
-
-            result.AppendLine("}");
             return result.ToString();
         }
 

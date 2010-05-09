@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Specs2Tests
@@ -8,18 +9,25 @@ namespace Specs2Tests
         public ParsedSpec Parse(string specText)
         {
             var result = new ParsedSpec();
-
-            foreach (var line in specText.Split(new[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries))
+            var currentSpecGroup = new ParsedSpec.SpecGroup();
+            foreach (var line in specText.Split(new[] {"\r\n"}, StringSplitOptions.None).Select(s => s.Trim()))
             {
+                if (string.IsNullOrEmpty(line))
+                {
+                    currentSpecGroup = null;
+                    continue;
+                }
+
                 if (line.StartsWith("-"))
                 {
                     var match = Regex.Match(line, @"^-\s*?([^\s].*)$");
                     if (match.Success)
-                        result.AddTest(match.Groups[1].Value);
+                        currentSpecGroup.AddTest(match.Groups[1].Value);
                 }
-                else if (string.IsNullOrEmpty(result.ClassName))
+                else if (currentSpecGroup == null)
                 {
-                    result.ClassName = line;
+                    currentSpecGroup = result.AddSpecGroup();
+                    currentSpecGroup.ClassName = line;
                 }
             }
             return result;

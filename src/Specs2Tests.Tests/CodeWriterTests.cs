@@ -13,9 +13,14 @@ namespace Specs2Tests.Tests
         protected override void Establish_context()
         {
             _parsedSpec = new ParsedSpec();
-            _parsedSpec.ClassName = "When attempting to close an account and the account balance is not zero";
-            _parsedSpec.AddTest("should not mark the account as closed");
-            _parsedSpec.AddTest("should notify the user that the account could not be closed because the account balance was not zero");
+            var currentSpecGroup = _parsedSpec.AddSpecGroup();
+            currentSpecGroup.ClassName = "When attempting to close an account and the account balance is not zero";
+            currentSpecGroup.AddTest("should not mark the account as closed");
+            currentSpecGroup.AddTest("should notify the user that the account could not be closed because the account balance was not zero");
+
+            currentSpecGroup = _parsedSpec.AddSpecGroup();
+            currentSpecGroup.ClassName = "When doing something cool";
+            currentSpecGroup.AddTest("should do something awesome");
 
             _writer = new CodeWriter();
         }
@@ -40,6 +45,16 @@ public class When_attempting_to_close_an_account_and_the_account_balance_is_not_
 
     [Test]
     public void should_notify_the_user_that_the_account_could_not_be_closed_because_the_account_balance_was_not_zero()
+    {
+
+    }
+}
+
+[TestFixture]
+public class When_doing_something_cool
+{
+    [Test]
+    public void should_do_something_awesome()
     {
 
     }
