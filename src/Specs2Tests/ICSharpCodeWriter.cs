@@ -1,6 +1,6 @@
 namespace Specs2Tests
 {
-    public interface ICodeWriter
+    public interface ICSharpCodeWriter
     {
         string WriteCode(ParsedSpec parsedSpec);
     }

@@ -2,11 +2,11 @@ using System.Text;
 
 namespace Specs2Tests
 {
-    public class CodeWriter : ICodeWriter
+    public class CSharpCodeWriter : ICSharpCodeWriter
     {
         private readonly IConfiguration _configuration;
 
-        public CodeWriter(IConfiguration configuration)
+        public CSharpCodeWriter(IConfiguration configuration)
         {
             _configuration = configuration;
         }

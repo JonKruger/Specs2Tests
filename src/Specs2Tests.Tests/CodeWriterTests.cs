@@ -5,9 +5,9 @@ using Rhino.Mocks;
 namespace Specs2Tests.Tests
 {
     [TestFixture]
-    public class When_writing_out_the_code : Specification
+    public class When_writing_out_the_code_in_C_sharp : Specification
     {
-        private CodeWriter _writer;
+        private CSharpCodeWriter _writer;
         private ParsedSpec _parsedSpec;
         private string _result;
 
@@ -26,7 +26,7 @@ namespace Specs2Tests.Tests
             var configuration = CreateStub<IConfiguration>();
             configuration.Stub(s => s.BaseTestClass).Return("BaseTestClass");
 
-            _writer = new CodeWriter(configuration);
+            _writer = new CSharpCodeWriter(configuration);
         }
 
         protected override void Because_of()

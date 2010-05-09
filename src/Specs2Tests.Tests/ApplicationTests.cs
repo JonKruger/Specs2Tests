@@ -8,21 +8,21 @@ namespace Specs2Tests.Tests
     {
         private IClipboard _clipboard;
         private ISpecParser _specParser;
-        private ICodeWriter _codeWriter;
+        private ICSharpCodeWriter _cSharpCodeWriter;
         private Application _application;
 
         protected override void Establish_context()
         {
             _clipboard = CreateStub<IClipboard>();
             _specParser = CreateStub<ISpecParser>();
-            _codeWriter = CreateStub<ICodeWriter>();
-            _application = new Application(_clipboard, _specParser, _codeWriter);
+            _cSharpCodeWriter = CreateStub<ICSharpCodeWriter>();
+            _application = new Application(_clipboard, _specParser, _cSharpCodeWriter);
 
             var parsedSpec = new ParsedSpec();
 
             _clipboard.Stub(c => c.GetData()).Return("spec");
             _specParser.Stub(p => p.Parse("spec")).Return(parsedSpec);
-            _codeWriter.Stub(w => w.WriteCode(parsedSpec)).Return("code");
+            _cSharpCodeWriter.Stub(w => w.WriteCode(parsedSpec)).Return("code");
         }
 
         protected override void Because_of()

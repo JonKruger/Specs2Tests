@@ -53,10 +53,10 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Clipboard.cs" />
-    <Compile Include="CodeWriter.cs" />
+    <Compile Include="CSharpCodeWriter.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="IClipboard.cs" />
-    <Compile Include="ICodeWriter.cs" />
+    <Compile Include="ICSharpCodeWriter.cs" />
     <Compile Include="IConfiguration.cs" />
     <Compile Include="ISpecParser.cs" />
     <Compile Include="ParsedSpec.cs" />
