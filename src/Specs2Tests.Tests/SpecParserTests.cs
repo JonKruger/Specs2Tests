@@ -109,4 +109,37 @@ When withdrawing money from an account
         }
 
     }
+
+    [TestFixture]
+    public class When_parsing_specs_with_Given_and_When : Specification
+    {
+        private SpecParser _parser;
+        private ParsedSpec _result;
+
+        protected override void Establish_context()
+        {
+            _parser = new SpecParser();
+        }
+
+        protected override void Because_of()
+        {
+            _result = _parser.Parse(
+                @"
+Given something cool
+When doing something awesome
+- should revel in the awesomeness
+");
+        }
+
+        [Test]
+        public void Should_use_the_Given_as_the_base_class_for_the_When()
+        {
+            _result.SpecGroups.ElementAt(0).ClassName.ShouldEqual("Given something cool");
+            _result.SpecGroups.ElementAt(0).TestNames.ShouldBeEmpty();
+
+            _result.SpecGroups.ElementAt(1).ClassName.ShouldEqual("When doing something awesome");
+            _result.SpecGroups.ElementAt(1).BaseClass.ShouldEqual("Given something cool");
+            _result.SpecGroups.ElementAt(1).TestNames.Single().ShouldEqual("should revel in the awesomeness");
+        }
+    }
 }
