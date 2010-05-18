@@ -66,5 +66,41 @@ public class When_doing_something_cool : BaseTestClass
 ");
         }
     }
+
+    [TestFixture]
+    public class When_writing_out_the_code_in_C_sharp_and_the_parsed_text_has_characters_that_cannot_be_in_class_or_method_names : Specification
+    {
+        private CSharpCodeWriter _writer;
+        private ParsedSpec _parsedSpec;
+        private string _result;
+
+        protected override void Establish_context()
+        {
+            _parsedSpec = new ParsedSpec();
+            var currentSpecGroup = _parsedSpec.AddSpecGroup();
+            currentSpecGroup.ClassName = "When, \"a'b+c^d%e#f-";
+
+            var configuration = CreateStub<IConfiguration>();
+            configuration.Stub(s => s.BaseTestClass).Return("BaseTestClass");
+
+            _writer = new CSharpCodeWriter(configuration);
+        }
+
+        protected override void Because_of()
+        {
+            _result = _writer.WriteCode(_parsedSpec);
+        }
+
+        [Test]
+        public void Should_replace_the_special_characters_with_underscores()
+        {
+            _result.ShouldEqual(
+                @"[TestFixture]
+public class When___a_b_c_d_e_f_ : BaseTestClass
+{
+}
+");
+        }
+    }
 }
 

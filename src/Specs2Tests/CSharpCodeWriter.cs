@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Specs2Tests
 {
@@ -57,7 +58,7 @@ namespace Specs2Tests
 
         private string AddUnderscores(string s)
         {
-            return s.Replace(" ", "_");
+            return Regex.Replace(s, "[^A-Za-z0-9_]", "_");
         }
     }
 }
