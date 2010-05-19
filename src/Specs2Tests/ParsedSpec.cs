@@ -8,6 +8,7 @@ namespace Specs2Tests
         public class SpecGroup
         {
             private List<string> _testNames = new List<string>();
+            private List<string> _setupMethods = new List<string>();
 
             public string ClassName { get; set; }
             public IEnumerable<string> TestNames
@@ -15,9 +16,19 @@ namespace Specs2Tests
                 get { return _testNames; }
             }
 
+            public IEnumerable<string> SetupMethods
+            {
+                get { return _setupMethods; }
+            }
+
             public void AddTest(string testName)
             {
                 _testNames.Add(testName);
+            }
+
+            public void AddSetupMethod(string method)
+            {
+                _setupMethods.Add(method);
             }
         }
 

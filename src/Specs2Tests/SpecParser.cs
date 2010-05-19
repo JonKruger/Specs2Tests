@@ -24,10 +24,17 @@ namespace Specs2Tests
                     if (match.Success)
                         currentSpecGroup.AddTest(match.Groups[1].Value);
                 }
-                else if (currentSpecGroup == null)
+                else if (line.ToLower().StartsWith("when"))
                 {
-                    currentSpecGroup = result.AddSpecGroup();
+                    if (currentSpecGroup == null)
+                        currentSpecGroup = result.AddSpecGroup();
                     currentSpecGroup.ClassName = line;
+                }
+                else
+                {
+                    if (currentSpecGroup == null)
+                        currentSpecGroup = result.AddSpecGroup();
+                    currentSpecGroup.AddSetupMethod(line);
                 }
             }
             return result;

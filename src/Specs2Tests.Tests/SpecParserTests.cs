@@ -134,12 +134,9 @@ When doing something awesome
         [Test]
         public void Should_use_the_Given_as_the_base_class_for_the_When()
         {
-            _result.SpecGroups.ElementAt(0).ClassName.ShouldEqual("Given something cool");
-            _result.SpecGroups.ElementAt(0).TestNames.ShouldBeEmpty();
-
-            _result.SpecGroups.ElementAt(1).ClassName.ShouldEqual("When doing something awesome");
-            _result.SpecGroups.ElementAt(1).BaseClass.ShouldEqual("Given something cool");
-            _result.SpecGroups.ElementAt(1).TestNames.Single().ShouldEqual("should revel in the awesomeness");
+            _result.SpecGroups.ElementAt(0).ClassName.ShouldEqual("When doing something awesome");
+            _result.SpecGroups.ElementAt(0).SetupMethods.Single().ShouldEqual("Given something cool");
+            _result.SpecGroups.ElementAt(0).TestNames.Single().ShouldEqual("should revel in the awesomeness");
         }
     }
 }
