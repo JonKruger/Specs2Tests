@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -27,6 +28,16 @@ namespace Specs2Tests
                 WriteTestNameLine(result, specGroup);
 
                 result.AppendLine("{");
+
+                if (specGroup.SetupMethods.Any())
+                {
+                    result.AppendLine("    protected override void Establish_context()");
+                    result.AppendLine("    {");
+                    foreach (var setupMethod in specGroup.SetupMethods)
+                        result.AppendLine("        " + AddUnderscores(setupMethod) + "();");
+                    result.AppendLine("    }");
+                    result.AppendLine();
+                }
 
                 var firstTest = true;
                 foreach (var testName in specGroup.TestNames)

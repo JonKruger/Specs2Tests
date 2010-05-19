@@ -21,6 +21,8 @@ namespace Specs2Tests.Tests
 
             currentSpecGroup = _parsedSpec.AddSpecGroup();
             currentSpecGroup.ClassName = "When doing something cool";
+            currentSpecGroup.AddSetupMethod("As a user");
+            currentSpecGroup.AddSetupMethod("Given some cool stuff");
             currentSpecGroup.AddTest("should do something awesome");
 
             var configuration = CreateStub<IConfiguration>();
@@ -57,6 +59,12 @@ public class When_attempting_to_close_an_account_and_the_account_balance_is_not_
 [TestFixture]
 public class When_doing_something_cool : BaseTestClass
 {
+    protected override void Establish_context()
+    {
+        As_a_user();
+        Given_some_cool_stuff();
+    }
+
     [Test]
     public void should_do_something_awesome()
     {
