@@ -16,60 +16,38 @@ namespace Specs2Tests
         public string WriteCode(ParsedSpec parsedSpec)
         {
             var result = new StringBuilder();
-
-            var firstSpecGroup = true;
-            foreach (var specGroup in parsedSpec.SpecGroups)
-            {
-                if (!firstSpecGroup)
-                    result.AppendLine();
-                firstSpecGroup = false;
-
-                result.AppendLine("[TestFixture]");
-                WriteTestNameLine(result, specGroup);
-
-                result.AppendLine("{");
-
-                if (specGroup.SetupMethods.Any())
-                {
-                    result.AppendLine("    protected override void Establish_context()");
-                    result.AppendLine("    {");
-                    foreach (var setupMethod in specGroup.SetupMethods)
-                        result.AppendLine("        " + AddUnderscores(setupMethod) + "();");
-                    result.AppendLine("    }");
-                    result.AppendLine();
-                }
-
                 var firstTest = true;
-                foreach (var testName in specGroup.TestNames)
-                {
-                    if (!firstTest)
-                        result.AppendLine();
-                    firstTest = false;
-
-                    result.AppendLine("    [Test]");
-                    result.AppendLine(string.Format("    public void {0}()", AddUnderscores(testName)));
-                    result.AppendLine("    {");
+            foreach (var scenario in parsedSpec.Scenarios)
+            {
+                if (!firstTest)
                     result.AppendLine();
-                    result.AppendLine("    }");
-                }
+                firstTest = false;
 
-                result.AppendLine("}");
+                result.AppendLine("    [Test]");
+                result.AppendLine(string.Format("    public void {0}()", scenario.Name));
+                result.AppendLine("    {");
+
+                foreach (var method in scenario.CalledMethods)
+                    result.AppendLine(string.Format("        {0}();", method));
+ 
+                result.AppendLine("    }");
+            }
+
+            if (parsedSpec.HelperMethods.Any())
+            {
+                result.AppendLine();
+                result.AppendLine("    // Helper methods");
+            }
+
+            foreach (var method in parsedSpec.HelperMethods)
+            {
+                result.AppendLine();
+                result.AppendLine(string.Format("    private void {0}()", method));
+                result.AppendLine("    {");
+                result.AppendLine("        throw new NotImplementedException();");
+                result.AppendLine("    }");
             }
             return result.ToString();
-        }
-
-        private void WriteTestNameLine(StringBuilder result, ParsedSpec.SpecGroup specGroup)
-        {
-            result.AppendFormat("public class {0}", AddUnderscores(specGroup.ClassName));
-
-            if (!string.IsNullOrEmpty(_configuration.BaseTestClass))
-                result.AppendFormat(" : {0}", _configuration.BaseTestClass);
-            result.AppendLine();
-        }
-
-        private string AddUnderscores(string s)
-        {
-            return Regex.Replace(s, "[^A-Za-z0-9_]", "_");
         }
     }
 }

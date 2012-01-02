@@ -14,19 +14,38 @@ namespace Specs2Tests.Tests
         protected override void Establish_context()
         {
             _parsedSpec = new ParsedSpec();
-            var currentSpecGroup = _parsedSpec.AddSpecGroup();
-            currentSpecGroup.ClassName = "When attempting to close an account and the account balance is not zero";
-            currentSpecGroup.AddTest("should not mark the account as closed");
-            currentSpecGroup.AddTest("should notify the user that the account could not be closed because the account balance was not zero");
+            _parsedSpec.AddScenario(new Scenario
+                                    {
+                                        Name = "Test_name",
+                                        CalledMethods = new[]
+                                                            {
+                                                                "Given_something",
+                                                                "When_I_do_something",
+                                                                "Then_something_should_happen"
+                                                            }
+                                    });
+            _parsedSpec.AddHelperMethod("Given_something");
+            _parsedSpec.AddHelperMethod("When_I_do_something");
+            _parsedSpec.AddHelperMethod("Then_something_should_happen");
 
-            currentSpecGroup = _parsedSpec.AddSpecGroup();
-            currentSpecGroup.ClassName = "When doing something cool";
-            currentSpecGroup.AddSetupMethod("As a user");
-            currentSpecGroup.AddSetupMethod("Given some cool stuff");
-            currentSpecGroup.AddTest("should do something awesome");
+            _parsedSpec.AddScenario(new Scenario
+                                    {
+                                        Name = "Another_test_name",
+                                        CalledMethods = new[]
+                                                            {
+                                                                "Given_something_else",
+                                                                "When_I_do_something_else",
+                                                                "Then_something_else_should_happen"
+                                                            }
+                                    });
+            _parsedSpec.AddHelperMethod("Given_something");
+            _parsedSpec.AddHelperMethod("When_I_do_something");
+            _parsedSpec.AddHelperMethod("Then_something_should_happen");
+            _parsedSpec.AddHelperMethod("Given_something_else");
+            _parsedSpec.AddHelperMethod("When_I_do_something_else");
+            _parsedSpec.AddHelperMethod("Then_something_else_should_happen");
 
             var configuration = CreateStub<IConfiguration>();
-            configuration.Stub(s => s.BaseTestClass).Return("BaseTestClass");
 
             _writer = new CSharpCodeWriter(configuration);
         }
@@ -40,73 +59,53 @@ namespace Specs2Tests.Tests
         public void Should_create_the_test_code()
         {
             _result.ShouldEqual(
-                @"[TestFixture]
-public class When_attempting_to_close_an_account_and_the_account_balance_is_not_zero : BaseTestClass
-{
-    [Test]
-    public void should_not_mark_the_account_as_closed()
+                @"    [Test]
+    public void Test_name()
     {
-
+        Given_something();
+        When_I_do_something();
+        Then_something_should_happen();
     }
 
     [Test]
-    public void should_notify_the_user_that_the_account_could_not_be_closed_because_the_account_balance_was_not_zero()
+    public void Another_test_name()
     {
-
-    }
-}
-
-[TestFixture]
-public class When_doing_something_cool : BaseTestClass
-{
-    protected override void Establish_context()
-    {
-        As_a_user();
-        Given_some_cool_stuff();
+        Given_something_else();
+        When_I_do_something_else();
+        Then_something_else_should_happen();
     }
 
-    [Test]
-    public void should_do_something_awesome()
-    {
+    // Helper methods
 
-    }
-}
-");
-        }
+    private void Given_something()
+    {
+        throw new NotImplementedException();
     }
 
-    [TestFixture]
-    public class When_writing_out_the_code_in_C_sharp_and_the_parsed_text_has_characters_that_cannot_be_in_class_or_method_names : Specification
+    private void Given_something_else()
     {
-        private CSharpCodeWriter _writer;
-        private ParsedSpec _parsedSpec;
-        private string _result;
+        throw new NotImplementedException();
+    }
 
-        protected override void Establish_context()
-        {
-            _parsedSpec = new ParsedSpec();
-            var currentSpecGroup = _parsedSpec.AddSpecGroup();
-            currentSpecGroup.ClassName = "When, \"a'b+c^d%e#f-";
+    private void When_I_do_something()
+    {
+        throw new NotImplementedException();
+    }
 
-            var configuration = CreateStub<IConfiguration>();
-            configuration.Stub(s => s.BaseTestClass).Return("BaseTestClass");
+    private void When_I_do_something_else()
+    {
+        throw new NotImplementedException();
+    }
 
-            _writer = new CSharpCodeWriter(configuration);
-        }
+    private void Then_something_should_happen()
+    {
+        throw new NotImplementedException();
+    }
 
-        protected override void Because_of()
-        {
-            _result = _writer.WriteCode(_parsedSpec);
-        }
-
-        [Test]
-        public void Should_replace_the_special_characters_with_underscores()
-        {
-            _result.ShouldEqual(
-                @"[TestFixture]
-public class When___a_b_c_d_e_f_ : BaseTestClass
-{
-}
+    private void Then_something_else_should_happen()
+    {
+        throw new NotImplementedException();
+    }
 ");
         }
     }

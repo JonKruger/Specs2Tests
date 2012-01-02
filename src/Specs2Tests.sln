@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs2Tests", "Specs2Tests\Specs2Tests.csproj", "{4C03F74A-2919-41D8-9FCE-79A5442FEDE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs2Tests.Tests", "Specs2Tests.Tests\Specs2Tests.Tests.csproj", "{8FAB6B5F-79B3-4AD7-AB77-3E50689B7863}"

@@ -1,49 +1,38 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Specs2Tests
 {
-    public class ParsedSpec
+    public class ParsedSpec 
     {
-        public class SpecGroup
+        public IList<Scenario> Scenarios
         {
-            private List<string> _testNames = new List<string>();
-            private List<string> _setupMethods = new List<string>();
+            get { return _scenarios.AsReadOnly(); }
+        }
 
-            public string ClassName { get; set; }
-            public IEnumerable<string> TestNames
+        public IList<string> HelperMethods
+        {
+            get
             {
-                get { return _testNames; }
-            }
-
-            public IEnumerable<string> SetupMethods
-            {
-                get { return _setupMethods; }
-            }
-
-            public void AddTest(string testName)
-            {
-                _testNames.Add(testName);
-            }
-
-            public void AddSetupMethod(string method)
-            {
-                _setupMethods.Add(method);
+                var result = new List<string>();
+                result.AddRange(_helperMethods.Where(m => m.ToLower().StartsWith("given")));
+                result.AddRange(_helperMethods.Where(m => m.ToLower().StartsWith("when")));
+                result.AddRange(_helperMethods.Where(m => m.ToLower().StartsWith("then")));
+                return result.Distinct().ToList().AsReadOnly();
             }
         }
 
-        private List<SpecGroup> _specGroups = new List<SpecGroup>();
+        private List<Scenario> _scenarios = new List<Scenario>(); 
+        private List<string> _helperMethods = new List<string>();
 
-        public IEnumerable<SpecGroup> SpecGroups
+        public void AddScenario(Scenario scenario)
         {
-            get { return _specGroups; }
+            _scenarios.Add(scenario);
         }
 
-        public SpecGroup AddSpecGroup()
+        public void AddHelperMethod(string method)
         {
-            var specGroup = new SpecGroup();
-            _specGroups.Add(specGroup);
-            return specGroup;
+            _helperMethods.Add(method);
         }
     }
 }
