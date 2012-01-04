@@ -80,6 +80,8 @@
     <Compile Include="ICSharpCodeWriter.cs" />
     <Compile Include="IConfiguration.cs" />
     <Compile Include="ISpecParser.cs" />
+    <Compile Include="MSTestConfiguration.cs" />
+    <Compile Include="NUnitConfiguration.cs" />
     <Compile Include="ParsedSpec.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

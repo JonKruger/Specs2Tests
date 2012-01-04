@@ -23,7 +23,7 @@ namespace Specs2Tests
                     result.AppendLine();
                 firstTest = false;
 
-                result.AppendLine("    [Test]");
+                result.AppendLine(string.Format("    [{0}]", _configuration.TestAttributeClass));
                 result.AppendLine(string.Format("    public void {0}()", scenario.Name));
                 result.AppendLine("    {");
 

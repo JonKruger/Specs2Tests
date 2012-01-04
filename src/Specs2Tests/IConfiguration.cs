@@ -5,9 +5,7 @@ namespace Specs2Tests
 {
     public interface IConfiguration
     {
-    }
-
-    public class Configuration : IConfiguration
-    {
+        string ClassAttributeClass { get; }
+        string TestAttributeClass { get; }
     }
 }
