@@ -33,7 +33,7 @@ You can get Specs2Tests in one of two ways:
 
 ## Caveats
 
-I wrote this utility originally for myself.  I hope that it can be useful for others, but I wrote it to match the style of testing that I use.  If you want it to generate code to match your style or if you want it to generate VB.NET code, modify/replace the CSharpCodeWriter class.  Honestly it's not that hard.
+I originally wrote this utility for myself.  I hope that it can be useful for others, but I wrote it to match the style of testing that I use.  If you want it to generate code to match your style or if you want it to generate VB.NET code, modify/replace the CSharpCodeWriter class.  Honestly it's not that hard.
 
 ## Enjoy!
 
