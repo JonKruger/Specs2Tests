@@ -1,4 +1,8 @@
+## Overview
+
 Specs2Tests is a simple library that will help you take textual given/when/then scenarios and transform them into unit tests in your favorite testing framework.  
+
+Why bother with this?  Because I believe that if you can't write out what you're trying to build in given/when/then format, you don't really know you're building.  But at the same time, I don't like having to type out all of the underscores, braces, attributes and all that.  It's much easier to type out the given/when/thens in text format, review it with your BAs and QA team, and then have it generate nice code for you where you can just fill in the blanks.
 
 Here's how it works:
 
@@ -6,7 +10,7 @@ Here's how it works:
 2. Copy the scenario text (you can copy multiple scenarios if you want)
 3. Run Specs2Tests.  It will pull the scenario off the clipboard, generate test code, and put it on the clipboard for you to paste into Visual Studio.
 
-Scenario need to look more or less like this:
+Scenarios need to look more or less like this:
 
 	Scenario: Deposit
 		Given a bank account
