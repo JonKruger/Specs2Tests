@@ -73,7 +73,7 @@ namespace Specs2Tests.Tests
         Then_something_else_should_happen();
     }
 
-    // Helper methods
+    #region Helper methods
 
     private void Given_something()
     {
@@ -104,6 +104,8 @@ namespace Specs2Tests.Tests
     {
         throw new NotImplementedException();
     }
+
+    #endregion
 ");
         }
     }
@@ -176,7 +178,7 @@ namespace Specs2Tests.Tests
         Then_something_else_should_happen();
     }
 
-    // Helper methods
+    #region Helper methods
 
     private void Given_something()
     {
@@ -207,6 +209,8 @@ namespace Specs2Tests.Tests
     {
         throw new NotImplementedException();
     }
+
+    #endregion
 ");
         }
     }

@@ -36,7 +36,7 @@ namespace Specs2Tests
             if (parsedSpec.HelperMethods.Any())
             {
                 result.AppendLine();
-                result.AppendLine("    // Helper methods");
+                result.AppendLine("    #region Helper methods");
             }
 
             foreach (var method in parsedSpec.HelperMethods)
@@ -47,6 +47,9 @@ namespace Specs2Tests
                 result.AppendLine("        throw new NotImplementedException();");
                 result.AppendLine("    }");
             }
+
+            result.AppendLine("");
+            result.AppendLine("    #endregion");   
             return result.ToString();
         }
     }
