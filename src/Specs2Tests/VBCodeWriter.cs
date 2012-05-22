@@ -4,11 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace Specs2Tests
 {
-    public class CSharpCodeWriter : ICodeWriter
+    public class VBCodeWriter : ICodeWriter
     {
         private readonly IConfiguration _configuration;
 
-        public CSharpCodeWriter(IConfiguration configuration)
+        public VBCodeWriter(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -23,14 +23,12 @@ namespace Specs2Tests
                     result.AppendLine();
                 firstTest = false;
 
-                result.AppendLine(string.Format("    [{0}]", _configuration.TestAttributeClass));
-                result.AppendLine(string.Format("    public void {0}()", scenario.Name));
-                result.AppendLine("    {");
-
+                result.AppendLine(string.Format("    <{0}()>", _configuration.TestAttributeClass));
+                result.AppendLine(string.Format("    Public Sub {0}()", scenario.Name));
                 foreach (var method in scenario.CalledMethods)
-                    result.AppendLine(string.Format("        {0}();", method));
+                    result.AppendLine(string.Format("        {0}()", method));
  
-                result.AppendLine("    }");
+                result.AppendLine("    End Sub");
             }
 
             if (parsedSpec.HelperMethods.Any())
@@ -42,10 +40,9 @@ namespace Specs2Tests
             foreach (var method in parsedSpec.HelperMethods)
             {
                 result.AppendLine();
-                result.AppendLine(string.Format("    private void {0}()", method));
-                result.AppendLine("    {");
-                result.AppendLine("        throw new NotImplementedException();");
-                result.AppendLine("    }");
+                result.AppendLine(string.Format("    Private Sub {0}()", method));
+                result.AppendLine("        throw new NotImplementedException()");
+                result.AppendLine("    End Sub");
             }
 
             result.AppendLine("");
