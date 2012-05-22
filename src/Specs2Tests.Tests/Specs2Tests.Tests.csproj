@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationTests.cs" />
+    <Compile Include="VBCodeWriterTests.cs" />
     <Compile Include="CSharpCodeWriterTests.cs" />
     <Compile Include="SpecParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

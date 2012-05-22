@@ -17,10 +17,12 @@ Scenarios need to look more or less like this:
 		When I deposit money into the account
 		Then the balance should increase by the amount of the deposit
 
-Currently Specs2Tests will generate C# code for the following test frameworks:
+Currently Specs2Tests will generate code (C# or VB.Net) for the following test frameworks:
 
 - NUnit (default)
 - MSTest
+
+
 
 If you edit the config file, you can specify which framework you want to use.  Use a different framework?  Fork the code and implement it and send me a pull request!
 

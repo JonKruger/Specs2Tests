@@ -74,10 +74,11 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Clipboard.cs" />
+    <Compile Include="VBCodeWriter.cs" />
     <Compile Include="CSharpCodeWriter.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="IClipboard.cs" />
-    <Compile Include="ICSharpCodeWriter.cs" />
+    <Compile Include="ICodeWriter.cs" />
     <Compile Include="IConfiguration.cs" />
     <Compile Include="ISpecParser.cs" />
     <Compile Include="MSTestConfiguration.cs" />

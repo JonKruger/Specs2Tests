@@ -8,14 +8,14 @@ namespace Specs2Tests.Tests
     {
         private IClipboard _clipboard;
         private ISpecParser _specParser;
-        private ICSharpCodeWriter _cSharpCodeWriter;
+        private ICodeWriter _cSharpCodeWriter;
         private Application _application;
 
         protected override void Establish_context()
         {
             _clipboard = CreateStub<IClipboard>();
             _specParser = CreateStub<ISpecParser>();
-            _cSharpCodeWriter = CreateStub<ICSharpCodeWriter>();
+            _cSharpCodeWriter = CreateStub<ICodeWriter>();
             _application = new Application(_clipboard, _specParser, _cSharpCodeWriter);
 
             var parsedSpec = new ParsedSpec();

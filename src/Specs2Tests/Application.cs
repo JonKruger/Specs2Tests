@@ -4,13 +4,13 @@ namespace Specs2Tests
     {
         private readonly IClipboard _clipboard;
         private readonly ISpecParser _specParser;
-        private readonly ICSharpCodeWriter _cSharpCodeWriter;
+        private readonly ICodeWriter _codeWriter;
 
-        public Application(IClipboard clipboard, ISpecParser specParser, ICSharpCodeWriter cSharpCodeWriter)
+        public Application(IClipboard clipboard, ISpecParser specParser, ICodeWriter cSharpCodeWriter)
         {
             _clipboard = clipboard;
             _specParser = specParser;
-            _cSharpCodeWriter = cSharpCodeWriter;
+            _codeWriter = cSharpCodeWriter;
         }
 
         public void Run()
@@ -33,7 +33,7 @@ namespace Specs2Tests
 
         private string GetTheCode(ParsedSpec parsedSpec)
         {
-            return _cSharpCodeWriter.WriteCode(parsedSpec);
+            return _codeWriter.WriteCode(parsedSpec);
         }
 
         private void SaveCodeToClipboard(string code)
